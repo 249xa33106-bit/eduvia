@@ -20,6 +20,8 @@ import { CampusView } from './components/Campus/CampusView';
 import { CareerModeView } from './components/Career/CareerModeView';
 import { ProfileView } from './components/Profile/ProfileView';
 import { LeaderboardView } from './components/Leaderboard/LeaderboardView';
+import { LeftSidebar } from './components/Sidebar/LeftSidebar';
+import { RightSidebar } from './components/Sidebar/RightSidebar';
 import { AICompanionModal } from './components/AICompanion/AICompanionModal';
 import { FlashcardModal } from './components/Flashcards/FlashcardModal';
 import { NotesManagerModal } from './components/Notes/NotesManagerModal';
@@ -170,68 +172,93 @@ export function App() {
         onOpenCodeAuditor={() => setIsCodeAuditorOpen(true)}
       />
 
-      {/* Main App Content Viewport */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 pt-6 relative z-10 pb-20">
-        {/* If Campus Mode toggled on header, prioritize Campus View */}
-        {isCampusActive ? (
-          <CampusView campusItems={initialCampusItems} />
-        ) : (
-          <>
-            {activeTab === 'home' && (
-              <HomeFeedView
-                reels={reels}
-                currentGoalTitle={userProfile.currentGoalTitle}
-                onOpenUnderstand={(r) => setActiveUnderstandReel(r)}
-                onOpenPractice={(r) => setActivePracticeReel(r)}
-                onOpenCode={(r) => setActiveCodeReel(r)}
-                onOpenProve={(r) => setActiveProveTopic(r.topic)}
-                onToggleSave={handleToggleSave}
-                onToggleLike={handleToggleLike}
-              />
-            )}
+      {/* Main App Content Viewport - 3 Column Layout */}
+      <div className="flex-1 max-w-[1400px] w-full mx-auto px-3 sm:px-6 pt-4 relative z-10 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Left Column: Navigation & Progress Sidebar */}
+          <div className="lg:col-span-3">
+            <LeftSidebar
+              userProfile={userProfile}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              onOpenNotes={() => setIsNotesOpen(true)}
+            />
+          </div>
 
-            {activeTab === 'discover' && (
-              <DiscoverView
-                reels={reels}
-                onOpenUnderstand={(r) => setActiveUnderstandReel(r)}
-              />
-            )}
+          {/* Center Column: Main Content Viewport */}
+          <main className="lg:col-span-9 xl:col-span-6">
+            {isCampusActive ? (
+              <CampusView campusItems={initialCampusItems} />
+            ) : (
+              <>
+                {activeTab === 'home' && (
+                  <HomeFeedView
+                    reels={reels}
+                    currentGoalTitle={userProfile.currentGoalTitle}
+                    onOpenUnderstand={(r) => setActiveUnderstandReel(r)}
+                    onOpenPractice={(r) => setActivePracticeReel(r)}
+                    onOpenCode={(r) => setActiveCodeReel(r)}
+                    onOpenProve={(r) => setActiveProveTopic(r.topic)}
+                    onToggleSave={handleToggleSave}
+                    onToggleLike={handleToggleLike}
+                  />
+                )}
 
-            {activeTab === 'create' && (
-              <CreatorStudio onPublishReel={handlePublishReel} />
-            )}
+                {activeTab === 'discover' && (
+                  <DiscoverView
+                    reels={reels}
+                    onOpenUnderstand={(r) => setActiveUnderstandReel(r)}
+                  />
+                )}
 
-            {activeTab === 'progress' && (
-              <div className="space-y-8">
-                <SkillGraphView
-                  goals={goals}
-                  skillTree={skillTree}
-                  userProfile={userProfile}
-                  onSelectGoal={(title) => setUserProfile((p) => ({ ...p, currentGoalTitle: title }))}
-                  onOpenProve={(skillName) => setActiveProveTopic(skillName)}
-                />
-                <div className="border-t border-white/10 pt-6">
-                  <ProjectShowcaseView projects={projects} onVerifyProject={handleVerifyProject} />
-                </div>
-                <div className="border-t border-white/10 pt-6">
-                  <CareerModeView opportunities={initialOpportunities} currentGoalTitle={userProfile.currentGoalTitle} />
-                </div>
-              </div>
-            )}
+                {activeTab === 'create' && (
+                  <CreatorStudio onPublishReel={handlePublishReel} />
+                )}
 
-            {activeTab === 'profile' && (
-              <ProfileView
-                userProfile={userProfile}
-                onOpenProve={(skillName) => setActiveProveTopic(skillName)}
-              />
-            )}
+                {activeTab === 'progress' && (
+                  <div className="space-y-8">
+                    <SkillGraphView
+                      goals={goals}
+                      skillTree={skillTree}
+                      userProfile={userProfile}
+                      onSelectGoal={(title) => setUserProfile((p) => ({ ...p, currentGoalTitle: title }))}
+                      onOpenProve={(skillName) => setActiveProveTopic(skillName)}
+                    />
+                    <div className="border-t border-white/10 pt-6">
+                      <ProjectShowcaseView projects={projects} onVerifyProject={handleVerifyProject} />
+                    </div>
+                    <div className="border-t border-white/10 pt-6">
+                      <CareerModeView opportunities={initialOpportunities} currentGoalTitle={userProfile.currentGoalTitle} />
+                    </div>
+                  </div>
+                )}
 
-            {activeTab === 'leaderboard' && (
-              <LeaderboardView userProfile={userProfile} />
+                {activeTab === 'profile' && (
+                  <ProfileView
+                    userProfile={userProfile}
+                    onOpenProve={(skillName) => setActiveProveTopic(skillName)}
+                  />
+                )}
+
+                {activeTab === 'leaderboard' && (
+                  <LeaderboardView userProfile={userProfile} />
+                )}
+              </>
             )}
-          </>
-        )}
-      </main>
+          </main>
+
+          {/* Right Column: AI Assistant, Leaderboard & Action Widgets */}
+          <div className="hidden xl:block xl:col-span-3">
+            <RightSidebar
+              userProfile={userProfile}
+              onOpenAICompanion={() => setIsAICompanionOpen(true)}
+              onOpenCodeBattle={() => setIsCodeBattleOpen(true)}
+              onOpenArchitecture={() => setIsArchitectureOpen(true)}
+              onOpenCodeAuditor={() => setIsCodeAuditorOpen(true)}
+            />
+          </div>
+        </div>
+      </div>
 
       {/* Feature Modals */}
       {isAICompanionOpen && (

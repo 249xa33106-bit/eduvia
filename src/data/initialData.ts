@@ -1,4 +1,4 @@
-import type { ReelItem, LearningGoal, SkillNode, ProjectItem, VerifiedSkillCard, UserProfile, CampusItem, CareerOpportunity } from '../types/eduvia';
+import type { ReelItem, LearningGoal, SkillNode, ProjectItem, UserProfile, CampusItem, CareerOpportunity } from '../types/eduvia';
 
 export const initialReels: ReelItem[] = [
   {
@@ -43,43 +43,15 @@ export const initialReels: ReelItem[] = [
         ],
         correctAnswer: 1,
         explanation: '`[x**2 for x in range(10) if x % 2 == 0]` uses `**` for exponentiation and an `if` filter condition.'
-      },
-      {
-        id: 'q2',
-        question: 'What is returned by `[c.upper() for c in "edu"]`?',
-        options: ['"EDU"', "['E', 'D', 'U']", "['e', 'd', 'u']", 'SyntaxError'],
-        correctAnswer: 1,
-        explanation: 'Iterating over a string yields character elements, producing a list of capitalized characters `["E", "D", "U"]`.'
-      },
-      {
-        id: 'q3',
-        question: 'Why does a generator expression `(x for x in data)` consume less memory than a list comprehension `[x for x in data]`?',
-        options: [
-          'Generators compress data using gzip in memory',
-          'Generators evaluate items lazily on demand, consuming O(1) memory instead of holding all items in RAM',
-          'Generators store items on disk instead of RAM',
-          'Generators automatically delete items after 1 second'
-        ],
-        correctAnswer: 1,
-        explanation: 'Generators compute values on the fly (`next()`), maintaining constant O(1) memory footprint regardless of dataset size.'
       }
     ],
     codeChallenge: {
       id: 'c1',
       title: 'Filter & Double Odd Numbers',
       description: 'Write a Python list comprehension that takes `numbers = [1, 2, 3, 4, 5, 6, 7]` and returns a list containing double the value of ONLY odd numbers.',
-      starterCode: `numbers = [1, 2, 3, 4, 5, 6, 7]
-
-# Write your list comprehension below:
-result = [x * 2 for x in numbers if x % 2 != 0]
-
-print("Result:", result)`,
-      solutionCode: `numbers = [1, 2, 3, 4, 5, 6, 7]
-result = [x * 2 for x in numbers if x % 2 != 0]
-print("Result:", result)`,
-      testCases: [
-        { input: '[1, 2, 3, 4, 5, 6, 7]', expected: '[2, 6, 10, 14]' }
-      ],
+      starterCode: `numbers = [1, 2, 3, 4, 5, 6, 7]\nresult = [x * 2 for x in numbers if x % 2 != 0]\nprint("Result:", result)`,
+      solutionCode: `numbers = [1, 2, 3, 4, 5, 6, 7]\nresult = [x * 2 for x in numbers if x % 2 != 0]\nprint("Result:", result)`,
+      testCases: [{ input: '[1, 2, 3, 4, 5, 6, 7]', expected: '[2, 6, 10, 14]' }],
       hint: 'Use `x * 2` as the transform expression and `x % 2 != 0` for the odd condition.'
     }
   },
@@ -120,104 +92,310 @@ print("Result:", result)`,
         options: ['10', '512', '1024', '1'],
         correctAnswer: 0,
         explanation: '2^10 = 1,024. Therefore log2(1024) = 10 comparisons.'
-      },
-      {
-        id: 'q2_bs',
-        question: 'What happens if you run Binary Search on an UNSORTED array?',
-        options: [
-          'It automatically sorts it first in O(1)',
-          'It produces unpredictable wrong results or fails to find existing elements',
-          'It works normally but takes O(N) time',
-          'Python throws an exception'
-        ],
-        correctAnswer: 1,
-        explanation: 'Binary search logic relies on ordering invariant. Discarding half the search window on an unsorted array eliminates target elements randomly.'
       }
     ],
     codeChallenge: {
       id: 'c2',
       title: 'Implement Binary Search Index Finder',
       description: 'Complete the `binary_search(arr, target)` function to return the 0-based index of target, or -1 if not found.',
-      starterCode: `def binary_search(arr, target):
-    low = 0
-    high = len(arr) - 1
-    
-    while low <= high:
-        mid = low + (high - low) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            low = mid + 1
-        else:
-            high = mid - 1
-            
-    return -1
-
-# Test
-nums = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
-print("Index of 23:", binary_search(nums, 23))`,
-      solutionCode: `def binary_search(arr, target):
-    low = 0
-    high = len(arr) - 1
-    while low <= high:
-        mid = low + (high - low) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            low = mid + 1
-        else:
-            high = mid - 1
-    return -1
-nums = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
-print("Index of 23:", binary_search(nums, 23))`,
-      testCases: [
-        { input: '[2, 5, 8, 12, 16, 23, 38, 56, 72, 91], target 23', expected: '5' }
-      ],
+      starterCode: `def binary_search(arr, target):\n    low, high = 0, len(arr) - 1\n    while low <= high:\n        mid = low + (high - low) // 2\n        if arr[mid] == target: return mid\n        elif arr[mid] < target: low = mid + 1\n        else: high = mid - 1\n    return -1`,
+      solutionCode: `def binary_search(arr, target):\n    low, high = 0, len(arr) - 1\n    while low <= high:\n        mid = low + (high - low) // 2\n        if arr[mid] == target: return mid\n        elif arr[mid] < target: low = mid + 1\n        else: high = mid - 1\n    return -1`,
+      testCases: [{ input: '[2, 5, 8, 12, 16, 23], target 23', expected: '5' }],
       hint: 'Maintain `low` and `high` bounds and shift `low = mid + 1` or `high = mid - 1`.'
     }
   },
   {
     id: 'reel-3',
-    title: 'Neural Networks: Activation Functions Demystified 🧠',
-    description: 'Why do deep learning models need ReLU, Sigmoid, or Softmax? Non-linearity explained visually.',
+    title: 'React 19 Server Components Deep Dive ⚛️',
+    description: 'Learn how React 19 Server Components eliminate bundle size overhead and stream HTML directly from backend.',
     videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-programmer-working-in-a-dark-room-41565-large.mp4',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&auto=format&fit=crop',
     creator: {
-      name: 'Prof. Alex Rivera',
-      handle: '@alex_deeplearning',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop',
-      title: 'Stanford AI Researcher & Eduvia Author',
+      name: 'Ayesha Khan',
+      handle: '@ayesha_gis',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop',
+      title: 'RescueMesh Collaborator & Frontend Lead',
       verified: true
     },
-    topic: 'Machine Learning',
-    skillTag: 'Deep Learning • Intermediate',
-    level: 'Intermediate',
-    likes: 24100,
-    commentsCount: 930,
-    saves: 8400,
-    shares: 4100,
+    topic: 'React',
+    skillTag: 'React • Advanced',
+    level: 'Advanced',
+    likes: 15400,
+    commentsCount: 610,
+    saves: 4200,
+    shares: 2100,
     understandBreakdown: {
-      beginner: 'Activation functions introduce non-linearity so neural networks can learn complex patterns beyond simple straight lines.',
-      intermediate: 'ReLU `f(x) = max(0, x)` solves the vanishing gradient problem in deep networks compared to Sigmoid.',
-      advanced: 'GELU and Swish activation functions are used in modern Transformer architectures (GPT, LLaMA) because they provide smooth non-zero gradients for negative inputs.',
+      beginner: 'Server Components execute exclusively on the server, producing zero client-side JavaScript bundle for static libraries.',
+      intermediate: 'Data fetching happens directly inside async server components, eliminating client `useEffect` boilerplate and waterfall fetches.',
+      advanced: 'Use `"use client"` directives sparingly at leaf node components requiring DOM event handlers or state.',
       keyTakeaways: [
-        'Without non-linearity, a 100-layer neural network collapses into 1 linear equation',
-        'ReLU output: 0 for negative inputs, x for positive inputs',
-        'Softmax converts multi-class raw logits into a valid probability distribution summing to 1.0'
+        'Zero client bundle size for server dependencies',
+        'Direct async/await database access in components',
+        'Automatic streaming SSR via Suspense boundaries'
       ]
     },
     quiz: [
       {
-        id: 'q1_nn',
-        question: 'What would happen if a deep neural network used NO activation functions (linear activations only)?',
+        id: 'q1_r19',
+        question: 'What directive is required at the top of a file to declare a React 19 Client Component?',
+        options: ['"use client"', '"use server"', '"use state"', '"use react"'],
+        correctAnswer: 0,
+        explanation: '`"use client"` explicitly marks the module boundary for client-side interactivity.'
+      }
+    ]
+  },
+  {
+    id: 'reel-4',
+    title: 'System Design: Designing WhatsApp with Kafka & Redis 🚀',
+    description: 'How to handle 100,000 concurrent message writes per second using asynchronous pub/sub architecture.',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-code-running-on-a-computer-screen-41566-large.mp4',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&auto=format&fit=crop',
+    creator: {
+      name: 'Elena Rostova',
+      handle: '@elena_dev',
+      avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop',
+      title: 'Senior Systems Architect',
+      verified: true
+    },
+    topic: 'System Design',
+    skillTag: 'System Design • Advanced',
+    level: 'Advanced',
+    likes: 21300,
+    commentsCount: 890,
+    saves: 7800,
+    shares: 3400,
+    understandBreakdown: {
+      beginner: 'Decouple message senders and receivers using message brokers like Apache Kafka for high-throughput messaging.',
+      intermediate: 'Store transient unread messages in Redis cache for sub-millisecond retrieval before persisting to database.',
+      advanced: 'Use horizontal partitioning (sharding) by `user_id` hash to distribute DB write load across database nodes.',
+      keyTakeaways: [
+        'Kafka for async pub/sub message queuing',
+        'Redis in-memory caching for low latency reads',
+        'Database sharding by hash keys'
+      ]
+    },
+    quiz: [
+      {
+        id: 'q1_sd',
+        question: 'Which component is best suited for buffering high-throughput asynchronous write requests?',
+        options: ['Message Queue (Kafka/RabbitMQ)', 'Browser LocalStorage', 'HTML Canvas', 'SQLite'],
+        correctAnswer: 0,
+        explanation: 'Message queues decouple producers from consumers, buffering burst write traffic.'
+      }
+    ]
+  },
+  {
+    id: 'reel-5',
+    title: 'PyTorch Backpropagation & Gradient Descent Calculus 🧬',
+    description: 'Understand autograd, loss computation, and weight update mechanics in deep neural networks.',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-programmer-working-in-a-dark-room-41565-large.mp4',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop',
+    creator: {
+      name: 'Dr. Sarah Chen',
+      handle: '@sarah_ai',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop',
+      title: 'Principal AI Scientist & Eduvia Mentor',
+      verified: true
+    },
+    topic: 'AI/ML',
+    skillTag: 'AI/ML • Intermediate',
+    level: 'Intermediate',
+    likes: 19800,
+    commentsCount: 710,
+    saves: 6500,
+    shares: 2800,
+    understandBreakdown: {
+      beginner: 'Backpropagation computes the gradient of loss with respect to model parameters using the chain rule.',
+      intermediate: 'In PyTorch, `loss.backward()` computes gradients automatically, and `optimizer.step()` updates weights via $W_{new} = W - \\alpha \\cdot \\nabla L$.',
+      advanced: 'Always remember `optimizer.zero_grad()` before computing loss to prevent gradient accumulation across iterations.',
+      keyTakeaways: [
+        'Chain rule calculates parameter partial derivatives',
+        'PyTorch autograd tracks computation graph dynamically',
+        'Always zero gradients before backward pass'
+      ]
+    },
+    quiz: [
+      {
+        id: 'q1_torch',
+        question: 'Why must you call `optimizer.zero_grad()` before `loss.backward()` in PyTorch?',
         options: [
-          'It would learn non-linear patterns faster',
-          'It collapses mathematically into a single linear regression model regardless of depth',
-          'It causes exploding gradients immediately',
-          'PyTorch throws a compile error'
+          'To prevent gradients from accumulating across training iterations',
+          'To delete the model weights',
+          'To clear GPU RAM',
+          'To speed up Python execution'
         ],
-        correctAnswer: 1,
-        explanation: 'Matrix multiplication of multiple linear layers is mathematically equivalent to a single linear transformation `W_total * X + b_total`.'
+        correctAnswer: 0,
+        explanation: 'PyTorch accumulates gradients by default (`+=`), so zeroing them is necessary every batch.'
+      }
+    ]
+  },
+  {
+    id: 'reel-6',
+    title: 'TypeScript 5.5 Inferred Type Predicates 📘',
+    description: 'Write cleaner code with automatic array filter narrowing in TypeScript 5.5.',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-code-running-on-a-computer-screen-41566-large.mp4',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1516116211223-48a12725dd24?w=600&auto=format&fit=crop',
+    creator: {
+      name: 'Rohan Sharma',
+      handle: '@rohan_code',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop',
+      title: 'Fullstack TS Engineer',
+      verified: true
+    },
+    topic: 'TypeScript',
+    skillTag: 'TypeScript • Intermediate',
+    level: 'Intermediate',
+    likes: 11200,
+    commentsCount: 380,
+    saves: 2900,
+    shares: 1400,
+    understandBreakdown: {
+      beginner: 'TypeScript 5.5 automatically infers return type predicates for functions like `.filter(x => x !== null)`.',
+      intermediate: 'Previously, `.filter(x => x !== null)` left `(string | null)[]` type intact without custom `x is string` assertion.',
+      advanced: 'This works for boolean filter functions, reducing type casting boilerplate across codebase.',
+      keyTakeaways: [
+        'Automatic array filter type narrowing',
+        'No manual type guards required for simple null filters',
+        'Cleaner, safer TypeScript code'
+      ]
+    },
+    quiz: [
+      {
+        id: 'q1_ts',
+        question: 'In TypeScript 5.5, what is the inferred type of `[1, null, 2].filter(x => x !== null)`?',
+        options: ['number[]', '(number | null)[]', 'any[]', 'unknown[]'],
+        correctAnswer: 0,
+        explanation: 'TS 5.5 automatically infers the type predicate `x is number`, filtering out `null` from the type.'
+      }
+    ]
+  },
+  {
+    id: 'reel-7',
+    title: 'Docker Multi-Stage Build Optimization 🐳',
+    description: 'Reduce container image size from 1.2GB down to 45MB with Docker multi-stage builds.',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-with-green-screen-41539-large.mp4',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1605745341112-85968b19335b?w=600&auto=format&fit=crop',
+    creator: {
+      name: 'Carlos Mendez',
+      handle: '@carlos_devops',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop',
+      title: 'DevOps & Cloud Architect',
+      verified: true
+    },
+    topic: 'DevOps',
+    skillTag: 'DevOps • Intermediate',
+    level: 'Intermediate',
+    likes: 14500,
+    commentsCount: 520,
+    saves: 4800,
+    shares: 1900,
+    understandBreakdown: {
+      beginner: 'Multi-stage builds allow you to use multiple `FROM` statements in a single Dockerfile.',
+      intermediate: 'Build artifacts in a heavy build stage, then copy ONLY compiled assets into a minimal runtime image like `alpine` or `scratch`.',
+      advanced: 'Excludes `node_modules` build tooling, compilers, and source files from production deployment.',
+      keyTakeaways: [
+        'Significantly smaller production image footprint',
+        'Improved container deployment security',
+        'Faster deployment pull times on Cloud hosts'
+      ]
+    },
+    quiz: [
+      {
+        id: 'q1_doc',
+        question: 'What command copies build artifacts from stage 0 into stage 1 in Dockerfile?',
+        options: [
+          'COPY --from=0 /app/dist ./dist',
+          'IMPORT /app/dist',
+          'FETCH stage0',
+          'PULL --stage=0'
+        ],
+        correctAnswer: 0,
+        explanation: '`COPY --from=0` copies specified files from a previous build stage.'
+      }
+    ]
+  },
+  {
+    id: 'reel-8',
+    title: 'Rust Memory Safety & Borrow Checker 🦀',
+    description: 'How Rust guarantees memory safety at compile time without any garbage collector overhead.',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-programmer-working-in-a-dark-room-41565-large.mp4',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop',
+    creator: {
+      name: 'Kira Tanaka',
+      handle: '@kira_rust',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop',
+      title: 'Systems & WebAssembly Specialist',
+      verified: true
+    },
+    topic: 'Rust',
+    skillTag: 'Rust • Advanced',
+    level: 'Advanced',
+    likes: 17800,
+    commentsCount: 640,
+    saves: 5900,
+    shares: 2700,
+    understandBreakdown: {
+      beginner: 'Rust enforces memory safety rules at compile time using ownership, borrowing, and lifetimes.',
+      intermediate: 'Ownership rules: 1) Each value has an owner. 2) Only 1 owner at a time. 3) When owner goes out of scope, value is dropped.',
+      advanced: 'Eliminates data races, dangling pointers, and double-free bugs without garbage collection latency pauses.',
+      keyTakeaways: [
+        'Zero-cost abstractions with compile-time safety checks',
+        'Strict ownership and borrowing rules',
+        'No GC pause latency in real-time systems'
+      ]
+    },
+    quiz: [
+      {
+        id: 'q1_rust',
+        question: 'How many mutable references (`&mut`) to a value can exist at the same time in Rust?',
+        options: ['Exactly 1', 'Unlimited', 'Up to 2', 'Zero'],
+        correctAnswer: 0,
+        explanation: 'Rust allows either one mutable reference OR any number of immutable references, preventing data races.'
+      }
+    ]
+  },
+  {
+    id: 'reel-9',
+    title: 'RescueMesh Edge AI Radio Node Demo 📡',
+    description: 'Shaik Sowban & team demonstrate real-time offline AI disaster triage on GPREC mesh radio nodes.',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-code-running-on-a-computer-screen-41566-large.mp4',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop',
+    creator: {
+      name: 'Shaik Sowban',
+      handle: '@sowban_dev',
+      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop',
+      title: 'CSM • Fullstack & AI Lead',
+      verified: true
+    },
+    topic: 'Edge AI',
+    skillTag: 'Edge AI • Advanced',
+    level: 'Advanced',
+    likes: 28400,
+    commentsCount: 1120,
+    saves: 9400,
+    shares: 4800,
+    understandBreakdown: {
+      beginner: 'RescueMesh operates decentralized wireless radio mesh networks for emergency signal routing.',
+      intermediate: 'Integrated TensorFlow Lite Micro quantizes PyTorch models to run on 256KB RAM microcontrollers.',
+      advanced: 'Uses cryptographically signed verified skill credentials on Lumixora PROVE Network for sensor node trust verification.',
+      keyTakeaways: [
+        'Zero-internet disaster response mesh networking',
+        'TensorFlow Lite quantization for microcontrollers',
+        'Lumixora PROVE cryptographic node verification'
+      ]
+    },
+    quiz: [
+      {
+        id: 'q1_rm',
+        question: 'What is the key advantage of running Quantized AI models on edge radio nodes?',
+        options: [
+          'Enables real-time inference without internet connection or cloud latency',
+          'Increases model file size',
+          'Requires 100GB RAM',
+          'Deletes sensor data automatically'
+        ],
+        correctAnswer: 0,
+        explanation: 'Edge AI processes signals locally on device with zero internet dependency and zero cloud latency.'
       }
     ]
   }
@@ -225,75 +403,57 @@ print("Index of 23:", binary_search(nums, 23))`,
 
 export const initialGoals: LearningGoal[] = [
   {
-    id: 'goal-ai-ml',
+    id: 'g1',
     title: 'Become an AI/ML Engineer',
-    overallProgress: 56,
+    overallProgress: 78,
     skills: [
       { name: 'Python', score: 84 },
       { name: 'DSA', score: 72 },
-      { name: 'Mathematics', score: 61 },
-      { name: 'Machine Learning', score: 43, gapWarning: true },
-      { name: 'Deep Learning', score: 28, gapWarning: true },
-      { name: 'Projects', score: 37, gapWarning: true },
-      { name: 'Interview', score: 21, gapWarning: true }
+      { name: 'AI/ML', score: 61, gapWarning: true },
+      { name: 'React / TS', score: 92 },
+      { name: 'System Design', score: 75 }
     ]
   },
   {
-    id: 'goal-fullstack',
-    title: 'Fullstack Systems Architect',
-    overallProgress: 74,
+    id: 'g2',
+    title: 'Fullstack Cloud Architect',
+    overallProgress: 65,
     skills: [
-      { name: 'JavaScript / TS', score: 92 },
-      { name: 'React / Next.js', score: 88 },
-      { name: 'Node.js & APIs', score: 81 },
-      { name: 'System Design', score: 65 },
-      { name: 'DevOps & Docker', score: 54, gapWarning: true },
-      { name: 'Database Architecture', score: 78 }
+      { name: 'React / TS', score: 92 },
+      { name: 'System Design', score: 75 },
+      { name: 'DevOps & Cloud', score: 58, gapWarning: true },
+      { name: 'Python', score: 84 }
     ]
   }
 ];
 
 export const initialSkillTree: SkillNode = {
-  id: 'aiml-root',
-  name: 'AI/ML Core',
-  score: 64,
+  id: 'st-root',
+  name: 'AI/ML Engineering',
+  score: 78,
   targetScore: 100,
   category: 'core',
   children: [
     {
-      id: 'python-branch',
+      id: 'st-python',
       name: 'Python Mastery',
       score: 84,
-      targetScore: 100,
+      targetScore: 90,
       category: 'core',
       children: [
-        { id: 'python-oop', name: 'OOP Concepts', score: 78, targetScore: 90, category: 'subskill' },
-        { id: 'python-dsa', name: 'DSA & Algorithms', score: 72, targetScore: 85, category: 'subskill' },
-        { id: 'python-apis', name: 'FastAPI & Async', score: 66, targetScore: 80, category: 'tool' }
+        { id: 'st-comp', name: 'Comprehensions', score: 95, targetScore: 100, category: 'subskill' },
+        { id: 'st-gen', name: 'Generators', score: 80, targetScore: 90, category: 'subskill' }
       ]
     },
     {
-      id: 'math-branch',
-      name: 'Math & Stats',
+      id: 'st-ml',
+      name: 'Deep Learning & PyTorch',
       score: 61,
-      targetScore: 100,
+      targetScore: 85,
       category: 'core',
       children: [
-        { id: 'linear-algebra', name: 'Linear Algebra', score: 68, targetScore: 85, category: 'subskill' },
-        { id: 'calculus', name: 'Multivariable Calculus', score: 55, targetScore: 80, category: 'subskill' },
-        { id: 'probability', name: 'Probability & Bayes', score: 60, targetScore: 80, category: 'subskill' }
-      ]
-    },
-    {
-      id: 'data-branch',
-      name: 'Data Engineering',
-      score: 72,
-      targetScore: 100,
-      category: 'core',
-      children: [
-        { id: 'pandas-numpy', name: 'NumPy & Pandas', score: 88, targetScore: 95, category: 'tool' },
-        { id: 'sql-queries', name: 'Advanced SQL', score: 76, targetScore: 90, category: 'tool' },
-        { id: 'vector-db', name: 'Vector DBs (Chroma/Pinecone)', score: 52, targetScore: 80, category: 'tool' }
+        { id: 'st-nn', name: 'Neural Networks', score: 65, targetScore: 85, category: 'subskill' },
+        { id: 'st-autograd', name: 'Backpropagation', score: 58, targetScore: 80, category: 'subskill' }
       ]
     }
   ]
@@ -301,73 +461,23 @@ export const initialSkillTree: SkillNode = {
 
 export const initialProjects: ProjectItem[] = [
   {
-    id: 'proj-rescuemesh',
-    title: '🚨 RescueMesh',
-    tagline: 'Decentralized IoT Mesh Network with Edge AI for Natural Disaster Victim Detection',
-    problem: 'During floods, earthquakes, and tower blackouts, traditional cellular connectivity fails completely, leaving emergency response teams blind to trapped victims.',
-    solution: 'RescueMesh deploys autonomous ESP32 mesh nodes paired with low-power thermal sensors. On-device edge AI runs lightweight inference to identify thermal heartbeats and relays location vectors hop-by-hop to rescue commanders without internet.',
-    demoUrl: 'https://rescuemesh.eduvia.app',
-    architectureNotes: 'ESP32 LoRa Nodes -> ESP-NOW Mesh Protocol -> Edge AI TensorFlow Lite micro -> WebRTC Ground Station Dashboard',
-    techStack: ['Python', 'IoT', 'Edge AI', 'GIS', 'C++', 'ESP32 Mesh'],
-    githubUrl: 'https://github.com/eduvia-projects/rescuemesh',
+    id: 'proj-1',
+    title: 'RescueMesh: Decentralized Edge AI Emergency Network',
+    tagline: 'Offline mesh radio emergency network with embedded TFLite micro model triage.',
+    problem: 'Disaster zones lose cellular connectivity, leaving first responders without situational triage data.',
+    solution: 'Built long-range mesh radio nodes with TFLite micro models performing real-time audio/sensor triage offline.',
+    demoUrl: 'https://rescuemesh.demo',
+    architectureNotes: 'React 19 Frontend -> Express API -> TFLite C++ Micro Inference -> Mesh Radio Packet Protocol',
+    techStack: ['React 19', 'TypeScript', 'Express', 'TensorFlow Lite', 'C++', 'Python'],
+    githubUrl: 'https://github.com/249xa33106-bit/eduvia',
     team: [
-      { name: 'Shaik Sowban', role: 'AI & Mesh Firmware Lead', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop' },
-      { name: 'Ayesha Khan', role: 'Frontend & GIS Map Lead', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop' },
-      { name: 'Rohit Sharma', role: 'Hardware & Enclosure Design', avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop' }
+      { name: 'Shaik Sowban', role: 'Lead Architect', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop' },
+      { name: 'Ayesha Khan', role: 'Frontend & GIS Lead', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop' }
     ],
-    skillsDemonstrated: ['Python', 'IoT', 'Edge AI', 'GIS', 'Distributed Systems'],
+    skillsDemonstrated: ['Python', 'DSA', 'AI/ML', 'React / TS', 'System Design'],
     verified: true,
-    verificationBadgeId: 'VERIFIED-PROJ-98421',
-    likes: 1420
-  },
-  {
-    id: 'proj-codepulse',
-    title: '⚡ CodePulse AI',
-    tagline: 'Real-time Autonomous Code Review & Refactoring Bot for GitHub PRs',
-    problem: 'Junior developers waste days waiting for human code review feedback on syntax errors and unoptimized queries.',
-    solution: 'CodePulse connects directly to GitHub webhooks, parses incoming AST diffs, checks against security rules, and runs static performance benchmarks before human review.',
-    demoUrl: 'https://codepulse.eduvia.app',
-    architectureNotes: 'GitHub App -> Node.js Webhook Handler -> LangChain Python Agent -> LLM Code Sandbox',
-    techStack: ['TypeScript', 'Python', 'FastAPI', 'LLM Agents', 'Docker'],
-    githubUrl: 'https://github.com/eduvia-projects/codepulse',
-    team: [
-      { name: 'Shaik Sowban', role: 'Creator & Developer', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop' }
-    ],
-    skillsDemonstrated: ['Python', 'TypeScript', 'FastAPI', 'Docker', 'AI Systems'],
-    verified: true,
-    verificationBadgeId: 'VERIFIED-PROJ-88112',
-    likes: 890
-  }
-];
-
-export const initialVerifiedSkills: VerifiedSkillCard[] = [
-  {
-    id: 'vskill-py',
-    skillName: 'PYTHON MASTERY',
-    level: 'Advanced Level',
-    codingScore: 92,
-    problemSolvingScore: 89,
-    debuggingScore: 87,
-    projectsScore: 91,
-    practicalTaskScore: 94,
-    overallScore: 91,
-    verifiedDate: 'Sep 24, 2026',
-    issuer: 'EDUVIA PROOF & LUMIXORA PROVE ECOSYSTEM',
-    lumixoraHash: '0x8f7a93b41c...e90a2'
-  },
-  {
-    id: 'vskill-dsa',
-    skillName: 'DATA STRUCTURES & ALGORITHMS',
-    level: 'Intermediate Level',
-    codingScore: 88,
-    problemSolvingScore: 85,
-    debuggingScore: 82,
-    projectsScore: 86,
-    practicalTaskScore: 89,
-    overallScore: 86,
-    verifiedDate: 'Sep 18, 2026',
-    issuer: 'EDUVIA PROOF & LUMIXORA PROVE ECOSYSTEM',
-    lumixoraHash: '0x4d12c8e90f...b78f1'
+    verificationBadgeId: 'PROVE-RM-9942',
+    likes: 1240
   }
 ];
 
@@ -390,87 +500,59 @@ export const initialUserProfile: UserProfile = {
     { name: 'React / TS', score: 92 },
     { name: 'System Design', score: 75 }
   ],
-  verifiedSkillCards: initialVerifiedSkills
+  verifiedSkillCards: [
+    {
+      id: 'vcard-1',
+      skillName: 'Python & Data Algorithms',
+      level: 'Advanced Master',
+      codingScore: 94,
+      problemSolvingScore: 91,
+      debuggingScore: 88,
+      projectsScore: 95,
+      practicalTaskScore: 92,
+      overallScore: 92,
+      verifiedDate: '2026-09-24',
+      issuer: 'Lumixora PROVE Network',
+      lumixoraHash: '0x8f3c...99a2'
+    }
+  ]
 };
 
 export const initialCampusItems: CampusItem[] = [
   {
     id: 'camp-1',
     type: 'hackathon',
-    title: '🏆 GPREC AI & IoT Hackathon 2026',
+    title: 'GPREC Campus AI & Cloud Hackathon 2026',
     campusName: 'GPREC Campus',
-    organizer: 'Department of Computer Science & CSM Club',
-    dateOrTime: 'October 12 - 14, 2026',
-    description: '36-Hour Hackathon focused on solving real-world campus & rural challenges using Edge AI, IoT, and Cloud Microservices. Over ₹1,00,000 in prizes!',
-    tags: ['Hackathon', 'AI', 'IoT', 'GPREC'],
+    organizer: 'Computer Science Department',
+    dateOrTime: 'Oct 15 - 17, 2026',
+    description: 'Build decentralized AI, Cloud, and Web3 applications. Total prize pool ₹1,50,000 + Internship referrals!',
+    tags: ['Hackathon', 'AI/ML', 'React', 'Cloud'],
     participantsCount: 340
   },
   {
     id: 'camp-2',
     type: 'announcement',
-    title: '📢 Campus Research Lab Openings: Computer Science & AI',
+    title: 'Eduvia Study Circle: Weekly DSA & Python Sprint',
     campusName: 'GPREC Campus',
-    organizer: 'GPREC Innovation Cell',
-    dateOrTime: 'Posted 2 hours ago',
-    description: 'Undergraduate research assistant positions available for 3rd and 4th year CSM/CSE students interested in LLM Fine-Tuning and Autonomous Robotics.',
-    tags: ['Research', 'AI/ML', 'Internship']
-  },
-  {
-    id: 'camp-3',
-    type: 'club',
-    title: '🚀 GPREC Open Source & Dev Club Weekly Meetup',
-    campusName: 'GPREC Campus',
-    organizer: 'GPREC OS Club',
-    dateOrTime: 'This Friday at 4:30 PM • CS Auditorium',
-    description: 'Hands-on session on Git workflows, building Eduvia extensions, and contributing to open-source student repositories.',
-    tags: ['Open Source', 'Workshop', 'Community'],
-    participantsCount: 85
+    organizer: 'Eduvia Student Chapter',
+    dateOrTime: 'Every Wednesday @ 5:00 PM',
+    description: 'Interactive peer speed coding challenges and 1v1 battle arena sessions at CS Lab 4.',
+    tags: ['DSA', 'Python', 'Peer Learning'],
+    participantsCount: 180
   }
 ];
 
 export const initialOpportunities: CareerOpportunity[] = [
   {
     id: 'opp-1',
-    title: 'Junior AI Engineer Intern',
-    companyOrOrg: 'NeuralEdge AI Systems',
+    title: 'AI/ML Engineering Intern',
+    companyOrOrg: 'Lumixora AI Labs',
     type: 'internship',
-    matchScore: 84,
-    requiredSkills: ['Python', 'PyTorch', 'FastAPI', 'DSA'],
-    stipendOrPrize: '₹35,000 / month',
-    deadline: 'Apply in 4 days',
-    applyUrl: '#'
-  },
-  {
-    id: 'opp-2',
-    title: 'National AI & Edge Computing Innovation Challenge',
-    companyOrOrg: 'Ministry of IT & Eduvia',
-    type: 'hackathon',
-    matchScore: 78,
-    requiredSkills: ['Python', 'IoT', 'Edge AI'],
-    stipendOrPrize: '₹5,00,000 Grand Pool',
-    deadline: 'Registration closes in 9 days',
-    applyUrl: '#'
-  },
-  {
-    id: 'opp-3',
-    title: 'Open Source Contributor - Vector DB Optimizer',
-    companyOrOrg: 'ChromaDB Ecosystem',
-    type: 'project',
-    matchScore: 72,
-    requiredSkills: ['Python', 'DSA', 'C++'],
-    stipendOrPrize: 'Bounty Pool $2,500',
-    deadline: 'Rolling admission',
-    applyUrl: '#'
-  },
-  {
-    id: 'opp-4',
-    title: '1-on-1 AI/ML Technical Mock Interview',
-    companyOrOrg: 'Senior FAANG AI Mentor Network',
-    type: 'mock_interview',
-    matchScore: 90,
-    requiredSkills: ['Python', 'DSA', 'Machine Learning'],
-    stipendOrPrize: 'Free Eduvia Credit',
-    deadline: 'Available Today',
-    applyUrl: '#'
+    matchScore: 92,
+    requiredSkills: ['Python', 'AI/ML', 'PyTorch'],
+    stipendOrPrize: '₹45,000 / month',
+    deadline: 'Oct 20, 2026',
+    applyUrl: 'https://lumixora.ai/careers'
   }
 ];
